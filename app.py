@@ -32,6 +32,15 @@ def users():
     return render_template('users.html', users=all_users)
 
 
+
+@app.route('/users/<int:user_id>')
+def users_show(user_id):
+    """Show a page with info on a specific user"""
+
+    user = User.query.get_or_404(user_id)
+    return render_template('users/show.html', user=user)
+
+
 @app.route("/create", methods=["GET"])
 def create():
     '''Create new user form'''
