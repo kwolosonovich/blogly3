@@ -7,18 +7,18 @@
 
     <div class="card border-success mb-3" style="width: 35rem;">
         <div class="card-body">
-            <form action="/post/{{ post_id }}/save", method="POST">
+            <form method="POST">
                 <div class="form-group">
                   <label for="title">Title:</label>
-                  <input type="text" class="form-control" name="title" id="title">
+                  <input type="text" class="form-control" name="title" id="title" placeholder="{{ post.title }}" value="{{ post.title }}">
                 </div>
                 <div class="form-group">
                     <label for="content">Content:</label>
-                    <input type="text" class="form-control" name="content" id="content">
+                    <input type="text" class="form-control" name="content" id="content" placeholder="{{ post.content }}" value="{{ post.content }}">
                 </div>
                 <div class="submit-buttons">
-                    <button class="btn btn-outline-info" type="submit" value="cancel" name="submit">Cancel</button>
-                    <button class="btn btn-info" type="submit" value="create" name="submit">Create!</button>
+                    <a href="/users/{{ post.id }}/edit" class="btn btn-outline-info">Cancel</a>
+                    <button class="btn btn-info" type="submit">Create!</button>
                 </div>
             </form>
         </div>

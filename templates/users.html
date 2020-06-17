@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
                     <div class="submit-buttons">
-                        <a href="/edit/{{ user.id }}" class="btn btn-outline-info">Edit</a>
+                        <a href="/edit/{{ user.id }}/edit" class="btn btn-outline-info">Edit</a>
                         <a href="/users/{{ user.id }}/delete" class="btn btn-info">Delete</a>
                     </div>
                     <div class="posts">
@@ -27,7 +27,7 @@
                                 </li>
                             {% endfor %}
                         </ul>
-                        <a href="/users/{{ user.id }}/post" class="btn btn-info" type="submit" value="add_post" name="submit">Add a Post</a>
+                        <a href="/users/{{ user.id }}/post/new" class="btn btn-info" type="submit" value="add_post" name="submit">Add a Post</a>
                     </div>
                 </div>
             </div>

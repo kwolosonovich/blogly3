@@ -32,7 +32,6 @@ def users():
     return render_template('users.html', users=all_users)
 
 
-
 @app.route('/users/<int:user_id>')
 def users_show(user_id):
     """Show a page with info on a specific user"""
@@ -51,82 +50,61 @@ def create():
 def create_user():
     '''Create a new user.'''
 
-    form_req = request.form['submit']
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    image_url = request.form["image_url"] or None
+    new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
 
-    if form_req == "cancel":
-        return redirect("/users")
+    db.session.add(new_user)
+    db.session.commit()
 
-    elif form_req == "create":
-
-        first_name = request.form["first_name"]
-        last_name = request.form["last_name"]
-        image_url = request.form["image_url"] or None
-        new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
-
-        db.session.add(new_user)
-        db.session.commit()
-
-        return redirect("/users")
+    return redirect("/users")
 
 
-@app.route("/edit/<user_id>", methods=["GET", "POST"])
+@app.route("/users/<user_id>/edit")
 def edit_user(user_id):
-    '''Generate update user form.'''
+    user = User.query.get_or_404(user_id)
+    return render_template('/edit_user.html', user=user)
 
-    user = User.get_by_id(user_id)
-    first_name = user.first_name
-    last_name = user.last_name
-    image_url = user.image_url
 
-    return render_template("/edit_user.html", user_id=user_id, first_name=first_name, last_name=last_name, image_url=image_url)
-
-@app.route("/users/<user_id>/edit", methods=["GET", "POST"])
-def submit_updates(user_id):
+@app.route("/users/<user_id>/edit", methods=["POST"])
+def update_user(user_id):
     '''Collect user updates and update database.'''
-    if request.form['submit'] == "cancel":
-        return redirect("/users")
 
-    elif request.form['submit'] == "save":
+    first_name = request.form["first_name"]
+    last_name = request.form["last_name"]
+    image_url = request.form["image_url"]
+    user = User.query.get_or_404(user_id)
 
-        first_name = request.form["first_name"]
-        last_name = request.form["last_name"]
-        image_url = request.form["image_url"]
-        user = User.get_by_id(user_id)
+    user.first_name = first_name
+    user.last_name = last_name
+    user.image_url = image_url
 
-        user.first_name = first_name
-        user.last_name = last_name
-        user.image_url = image_url
+    db.session.add(user)
+    db.session.commit()
 
-        db.session.commit()
+    return redirect("/users")
 
-        return redirect("/users")
 
-@app.route("/users/<user_id>/delete", methods=["GET", "POST"])
+@app.route("/users/<user_id>/delete")
 def delete_user(user_id):
     '''Delete user form'''
 
     user = User.get_by_id(user_id)
-    first_name = user.first_name
-    last_name = user.last_name
-    image_url = user.image_url
 
-    return render_template("/delete_user.html", user_id=user_id, first_name=first_name, last_name=last_name, image_url=image_url)
+    # return render_template("/delete_user.html", user_id=user_id, first_name=first_name, last_name=last_name, image_url=image_url)
+    return render_template("/delete_user.html", user_id=user_id, user=user)
 
 
-@app.route("/users/<user_id>/delete_user", methods=["GET", "POST"])
+@app.route("/users/<user_id>/delete", methods=["POST"])
 def delete(user_id):
     '''Delete user from users'''
 
-    if request.form['submit'] == "cancel":
-        return redirect("/users")
+    user = User.query.get_or_404(user_id)
+    db.session.delete(user)
+    db.session.commit()
 
-    elif request.form['submit'] == "delete":
-        user = User.query.get_or_404(user_id)
-
-        db.session.delete(user)
-        db.session.commit()
-
-        return redirect("/users")
+    return redirect("/users")
 
 
 @app.route("/users/<user_id>/post/new")
@@ -134,93 +112,72 @@ def post_new(user_id):
     '''Create post form.'''
 
     user = User.query.get_or_404(user_id)
-
     return render_template("/post_form.html", user=user)
 
 
-@app.route("/post/<user_id>/post/new", methods=["POST"])
+@app.route("/users/<user_id>/post/new", methods=["POST"])
 def post(user_id):
     '''Get post and save post to database'''
 
-    if request.form['submit'] == "cancel":
-        return redirect("/users")
-
-    elif request.form['submit'] == "create":
-        title = request.form["title"]
-        content = request.form["content"]
-        user_id = user_id
-        user = User.query.get_or_404(user_id)
-        new_post = Post(title=title, content=content, user=user)
-
-        db.session.add(new_post)
-        db.session.commit()
-
-        return redirect(f"/users/{user_id}")
-
-        # return render_template('/post_details.html', post=new_post, user=user)
-
-@app.route("/post/<user_id>/detail", methods=['POST'])
-def post_details(user_id):
-    '''Show post details'''
-
+    title = request.form["title"]
+    content = request.form["content"]
+    user_id = user_id
     user = User.query.get_or_404(user_id)
-    title = post.title
-    content = post.content
+    new_post = Post(title=title, content=content, user=user)
 
-    return render_template('/post_details.html', title=title, content=content, user=user)
+    db.session.add(new_post)
+    db.session.commit()
 
-# # @app.route("/post/<post_id>/options", methods=['GET', 'POST'])
-# @app.route("/post/options", methods=['GET', 'POST'])
-# def post_options():
-#     '''Post options'''
-#
-#     print('post_id')
-#     print('post.id')
-#
-#
-#     # if request.form['submit'] == "edit":
-#     #     return redirect("/post/edit")
-#
-#     elif request.form['submit'] == "delete":
-#         return redirect("/post/delete")
+    return redirect(f"/users/{user_id}")
 
 
-@app.route('/post/<post_id>/edit', methods=['GET', 'POST'])
-def posts_edit(post_id):
-    """Show a form to edit an existing post"""
-
+@app.route("/post/<post_id>")
+def post_details(post_id):
+    '''Show post details'''
 
     post = Post.query.get_or_404(post_id)
 
-    return render_template('post_edit.html', post)
+    return render_template('posts/show.html', post=post)
 
-# @app.route('/posts/<post_id>/save', methods=['GET', 'POST'])
-# def post_save(post_id):
-#
-#     if request.form['submit'] == "cancel":
-#         return redirect("/users")
-#
-#     elif request.form['submit'] == "create":
-#         post = Post.query.get_or_404(post_id)
-#         post.title = request.form['title']
-#         post.content = request.form['content']
-#
-#         db.session.add(post)
-#         db.session.commit()
-#
-#         return redirect('/users')
-#
-@app.route("/post/<post_id>/delete", methods=['GET', 'POST'])
+
+@app.route('/post/<post_id>/edit')
+def posts_edit(post_id):
+    """Show a form to edit an existing post"""
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('post_edit.html', post=post)
+
+
+@app.route('/post/<post_id>/edit', methods=['POST'])
+def posts_update(post_id):
+    '''Save updated post to database'''
+
+    print("post_update")
+    post = Post.query.get_or_404(post_id)
+    post.title = request.form['title']
+    post.content = request.form['content']
+
+    db.session.add(post)
+    db.session.commit()
+
+    return redirect(f"/users/{post.user_id}")
+
+
+@app.route("/post/<post_id>/delete", methods=['POST'])
 def post_delete(post_id):
 
-    if request.form['submit'] == "cancel":
-        return redirect("/users")
+    post = Post.query.get_or_404(post_id)
 
-    elif request.form['submit'] == "delete":
+    db.session.delete(post)
+    db.session.commit()
 
-        post = Post.query.get_or_404(post_id)
+    return redirect(f"/users/{post.user_id}")
 
-        db.session.delete(post)
-        db.session.commit()
 
-        return redirect('/users')
+@app.route('/tags')
+def tags_index():
+    '''Show all tags.'''
+
+    tags = Tag.query.all()
+    return render_template('tags/index.html', tags=tags)
