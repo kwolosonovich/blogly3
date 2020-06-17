@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% block title %}Users{% endblock %}
+
+{% block content %}
+
+    <h1>Blogly Users</h1>
+
+    <div class="user-profiles">
+
+        {% for user in users %}
+
+            <div class="card border-dark mb-3" style="width: 18rem;">
+                <div id="img" class="card-img-top" alt="profile picture">
+                    <img src="{{ user.image_url }}" alt="picture" class="img-thumbnail">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
+                    <div class="submit-buttons">
+                        <a href="/edit/{{ user.id }}" class="btn btn-outline-info">Edit</a>
+                        <a href="/users/{{ user.id }}/delete" class="btn btn-info">Delete</a>
+                    </div>
+                    <div class="posts">
+                        <ul>
+                            {% for post in user.posts %}
+                                <li>
+                                    {{ post.title }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <a href="/users/{{ user.id }}/post" class="btn btn-info" type="submit" value="add_post" name="submit">Add a Post</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+

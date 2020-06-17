@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block title %}Post Detail{% endblock %}
+
+{% block content %}
+
+    <h1>{{ user.first_name }}'s Post</h1>
+
+    <div class="card border-success mb-3" style="width: 35rem;">
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+{#            <form action="/post/options", method="POST">#}
+           <form action="/post/{{ post.id }}/options", method="POST">
+
+                <div class="form-group">
+                    {{ post.content }}
+                    {{ post.friendly_date }}
+                </div>
+                <div class="submit-buttons">
+                    <a href="/users" class="btn btn-outline-info" value="back" name="submit">Back</a>
+                    <form>
+                        <button formmethod="GET" formaction="/posts/{{ post.id }}/edit" class="btn btn-info" type="submit" value="edit" name="submit">Edit</button>
+                        <button formmethod="POST" formaction="/posts/{{ post.id }}/delete" class="btn btn-info" type="submit" value="delete" name="submit">Delete</button>
+                    </form>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+
+    <h1>Delete {{ first_name }}'s Profile</h1>
+
+    <div class="card border-warning mb-3 align-content-center" style="width: 28rem;">
+        <img id="img" class="card-img-top img-thumbnail" src="{{ image_url }}" alt="profile picture">
+        <div class="card-body">
+            <h5 class="card-title">{{ first_name }} {{ last_name }}</h5>
+            <form action="/users/{{ user_id }}/delete_user", method="POST">
+                <div class="alert alert-danger" role="alert">
+                    Are you sure you want to delete {{ first_name }}'s profile?
+                </div>
+                <div class="submit-buttons">
+                    <button class="btn btn-outline-info" type="submit" value="cancel" name="submit">Cancel</button>
+                    <button class="btn btn-info" type="submit" value="delete" name="submit">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

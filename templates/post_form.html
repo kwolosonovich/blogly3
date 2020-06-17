@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block title %}Post{% endblock %}
+
+{% block content %}
+
+        <h1>Create a Post for {{ first_name }} {{ last_name }}</h1>
+
+    <div class="card border-success mb-3" style="width: 60rem">
+        <div class="card-body">
+            <form action="/post/{{ user_id }}/new", method="POST">
+                <div class="form-group">
+                  <label for="title">Title:</label>
+                  <input type="text" class="form-control" name="title" id="title">
+                </div>
+                <div class="form-group">
+                    <label for="content">Content:</label>
+                    <input type="text" class="form-control" name="content" id="content">
+                </div>
+                <div class="submit-buttons">
+                    <a href="/users" class="btn btn-outline-info" value="cancel" name="submit">Cancel</a>
+                    <button class="btn btn-info" type="submit" value="create" name="submit">Create!</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

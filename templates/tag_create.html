@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+
+    <h1>Create a Tag</h1>
+
+    <div class="card border-success mb-3" style="width: 35rem;">
+        <div class="card-body">
+            <form action="/create_tag", method="POST">
+                <div class="form-group">
+                  <label for="create_tag">Name:</label>
+                  <input type="text" class="form-control" name="create_tag" id="create_tag">
+                </div>
+                <div class="submit-buttons">
+                    <button class="btn btn-outline-info" type="submit" value="cancel" name="submit">Cancel</button>
+                    <button class="btn btn-info" type="submit" value="create" name="submit">Create!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
