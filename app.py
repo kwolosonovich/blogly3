@@ -120,18 +120,16 @@ def delete(user_id):
         return redirect("/users")
 
 
-@app.route("/users/<user_id>/post", methods=["GET", "POST"])
+@app.route("/users/<user_id>/post/new")
 def post_new(user_id):
     '''Create post form.'''
 
     user = User.query.get_or_404(user_id)
-    first_name = user.first_name
-    last_name = user.last_name
 
-    return render_template("/post_form.html", user_id=user_id, first_name=first_name, last_name=last_name)
+    return render_template("/post_form.html", user=user)
 
 
-@app.route("/post/<user_id>/new", methods=["POST"])
+@app.route("/post/<user_id>/post/new", methods=["POST"])
 def post(user_id):
     '''Get post and save post to database'''
 
@@ -148,9 +146,11 @@ def post(user_id):
         db.session.add(new_post)
         db.session.commit()
 
-        return render_template('/post_details.html', post=new_post, user=user)
+        return redirect(f"/users/{user_id}")
 
-@app.route("/post/<user_id>/detail", methods=['GET', 'POST'])
+        # return render_template('/post_details.html', post=new_post, user=user)
+
+@app.route("/post/<user_id>/detail", methods=['POST'])
 def post_details(user_id):
     '''Show post details'''
 
@@ -158,15 +158,7 @@ def post_details(user_id):
     title = post.title
     content = post.content
 
-
-
-    # ************* can't get post_id' ***************
-
-
-
     return render_template('/post_details.html', title=title, content=content, user=user)
-
-    # ***** need to add post_id ******
 
 # # @app.route("/post/<post_id>/options", methods=['GET', 'POST'])
 # @app.route("/post/options", methods=['GET', 'POST'])
@@ -185,11 +177,13 @@ def post_details(user_id):
 
 
 @app.route('/post/<post_id>/edit', methods=['GET', 'POST'])
-def posts_edit():
+def posts_edit(post_id):
     """Show a form to edit an existing post"""
 
-    # post = Post.query.get_or_404(post_id)
-    return render_template('post_edit.html', post=post)
+
+    post = Post.query.get_or_404(post_id)
+
+    return render_template('post_edit.html', post)
 
 # @app.route('/posts/<post_id>/save', methods=['GET', 'POST'])
 # def post_save(post_id):
