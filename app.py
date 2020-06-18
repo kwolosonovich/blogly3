@@ -191,6 +191,33 @@ def new_tag():
 @app.route('/tags/new', methods=["POST"])
 def save_tag():
     '''Save tag to database.'''
+
+    for num in request.form.getlist("posts"):
+        print(num)
+
+    print(num)
+
+    post_ids = [int(num) for num in request.form.getlist("posts")]
+    print(num)
+    print(post_ids)
+    post = [request.form.getlist("posts")]
+    print(post)
+    posts = Post.query.filter(Post.id.in_(post_ids)).all()
+    new_tag = Tag(name=request.form['name'], posts=posts)
+
+    db.session.add(new_tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
+@app.route('/tags/new', methods=["POST"])
+def save_tag():
+    '''Save tag to database.'''
+    print("******************************************")
+    print(request.form.getlist("posts"))
+    for num in request.form.getlist("posts"):
+        print(num)
+    print("******************************************")
     post_ids = [int(num) for num in request.form.getlist("posts")]
     posts = Post.query.filter(Post.id.in_(post_ids)).all()
     new_tag = Tag(name=request.form['name'], posts=posts)
@@ -214,3 +241,5 @@ def tags_edit_form(tag_id):
     tag = Tag.query.get_or_404(tag_id)
     posts = Post.query.all()
     return render_template('tags/edit.html', tag=tag, posts=posts)
+
+
