@@ -50,7 +50,7 @@ def create_user():
     '''Create a new user.'''
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
-    image_url = request.form["image_url"] or None
+    image_url = request.form.get("image_url", None)
     new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
 
     db.session.add(new_user)

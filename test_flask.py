@@ -65,42 +65,50 @@ class UserViewsTestCase(TestCase):
 
 # ********************* doesn't work  ************
 
-    def test_create_user(self):
-        '''Test valid route and create user.'''
-        with self.client as client:
-
-
-            self.assertEqual(first_name: request.form["TestFirstName"])
-            self.assertEqual(last_name: request.form["TestLastName"])
-            self.assertEqual(image_url == request.form["None"])
-
-            # new_user = User(first_name=first_name, last_name=last_name, image_url=image_url)
-            #
-            # user = User(first_name='TestFirstName', last_name="TestLastName",
-            #             image_url='https://i.picsum.photos/id/1025/4951/3301.jpg?hmac=_aGh5AtoOChip_iaMo8ZvvytfEojcgqbCH7dzaz-H8Y')
-
-            response = client.get('/users')
-            self.first_name = request.form['first_name']
-
-            self.assertTrue(response.status_code == 200)
-            self.assertTrue()
-
-
     # def test_create_user(self):
-    #     '''Test create form request and relationship to database'''
+    #     '''Test valid route, create user, save to db, and POST request.'''
+    #     # form data
     #
-    #
-    #         # ******* does not work ********
-    #
-    # def edit_user(self):
-    #     '''Test if update user form is generated.'''
     #     with self.client as client:
+    #         # test with None image url
+    #         form = {
+    #             "first_name": "TestFirstName",
+    #             "last_name": "TestLastName",
+    #             "image_url": None,
+    #         }
     #
-    #     user = User(first_name='TestFirstName', last_name="TestLastName", image_url='https://i.picsum.photos/id/1025/4951/3301.jpg?hmac=_aGh5AtoOChip_iaMo8ZvvytfEojcgqbCH7dzaz-H8Y')
+    #         # query the database for the user
+    #         user = User.query.first()
+    #         # assert that the info in the database matches the info in the form above
+    #         self.assertTrue(user.first_name == form["first_name"])
+    #         self.assertTrue(user.last_name == form["last_name"])
     #
-    #     response = client.get('/edit_user.html')
-    #     html = response.get_data(as_text=True)
-    #     self.assertTrue(response.status_code == 200)
-    #     self.assertIn("<h1>Edit {{ first_name }} Profile</h1>", html)
+    #         # default_image_url = "https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/16671574911586787867-512.png"
+    #         # self.assertTrue(user.image_url == default_image_url)
+    #         # self.assertTrue(user.image_url == 'https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/16671574911586787867-512.png')
     #
+    #
+    #         # test with image url
+    #         form = {
+    #             "first_name": "Test",
+    #             "last_name": "Test",
+    #             "image_url": "https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/16671574911586787867-512.png",
+    #         }
+    #         response = client.post("/create_user", data=form)
+    #         self.assertTrue(response.status_code == 200)
+    #         self.assertTrue(user.first_name == form["first_name"])
+    #         self.assertTrue(user.last_name == form["last_name"])
+    #         self.assertTrue(user.image_url == form['https://upload-icon.s3.us-east-2.amazonaws.com/uploads/icons/png/16671574911586787867-512.png'])
+    #
+    #         response = client.post("/create_user", data=form)
+    #         self.assertTrue(response.status_code == 302)
+
+
+    def test_edit_user(self):
+        '''Test valid route and GET method, edit form and query of db.'''
+        with self.client as client:
+            user = {"first_name": "TestFirstName", "last_name": "TestLastName", "image_url": "https://i.picsum.photos/id/1025/4951/3301.jpg?hmac=_aGh5AtoOChip_iaMo8ZvvytfEojcgqbCH7dzaz-H8Y"}
+            # user = self.user
+            response = client.get(f'/users/{self.user_id}/edit', user=user, follow_redirects=True)
+            self.assertTrue(response.status_code == 200)
 
