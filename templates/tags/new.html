@@ -10,7 +10,7 @@
             <form method="POST">
                 <div class="form-group">
                     <label for="name">New Tag:</label>
-                    <input type="text" class="form-control" name="posts" placeholder="Name" id="name">
+                    <input type="text" class="form-control" name="tags" placeholder="Name" id="name">
                 </div>
                 <div class="form-check form-group row">
                     {% for post in posts %}
@@ -27,7 +27,7 @@
                     {% endfor %}
                 </div>
                 <div class="submit-buttons">
-                    <a href="/tags" class="btn btn-outline-info">Cancel</a>
+                    <a href="/tags" class="btn btn-outline-secondary">Cancel</a>
                     <button class="btn btn-info" type="submit">Create!</button>
                 </div>
             </form>

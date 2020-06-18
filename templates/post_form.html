@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h1>Create a Post for {{ user.first_name }} {{ user.last_name }}</h1>
+    <h1>Create a Post for {{ user.first_name }}</h1>
 
     <div class="card border-success mb-3" style="width: 60rem">
         <div class="card-body">
@@ -17,7 +17,7 @@
                     <input type="text" class="form-control" name="content" id="content">
                 </div>
                 <div class="submit-buttons">
-                    <a href="/users/{{ user.id }}" class="btn btn-outline-info" value="cancel" name="submit">Cancel</a>
+                    <a href="/users/{{ user.id }}" class="btn btn-outline-secondary" value="cancel" name="submit">Cancel</a>
                     <button class="btn btn-info" type="submit">Create!</button>
                 </div>
             </form>

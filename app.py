@@ -17,14 +17,14 @@ db.create_all()
 
 @app.route("/")
 def home_page():
-    '''Home Page with user list'''
+    '''Genereate homepage.'''
 
     return render_template('home.html')
 
 
 @app.route("/users")
 def users():
-    '''Show all users'''
+    '''Show all users.'''
     all_users = User.query.all()
 
     return render_template('users.html', users=all_users)
@@ -32,15 +32,14 @@ def users():
 
 @app.route('/users/<int:user_id>')
 def users_show(user_id):
-    """Show a page with info on a specific user"""
-
+    '''Show users details.'''
     user = User.query.get_or_404(user_id)
     return render_template('users/show.html', user=user)
 
 
 @app.route("/create", methods=["GET"])
 def create():
-    '''Create new user form'''
+    '''Create new user form.'''
     return render_template('/create_user.html')
 
 
@@ -61,6 +60,7 @@ def create_user():
 
 @app.route("/users/<user_id>/edit")
 def edit_user(user_id):
+    '''Generate edit user form.'''
     user = User.query.get_or_404(user_id)
     return render_template('/edit_user.html', user=user)
 
@@ -89,8 +89,6 @@ def delete_user(user_id):
     '''Delete user form'''
 
     user = User.get_by_id(user_id)
-
-    # return render_template("/delete_user.html", user_id=user_id, first_name=first_name, last_name=last_name, image_url=image_url)
     return render_template("/delete_user.html", user_id=user_id, user=user)
 
 
@@ -115,7 +113,7 @@ def post_new(user_id):
 
 @app.route("/users/<user_id>/post/new", methods=["POST"])
 def post(user_id):
-    '''Get post and save post to database'''
+    '''Get post and save post to database.'''
 
     title = request.form["title"]
     content = request.form["content"]
@@ -131,7 +129,7 @@ def post(user_id):
 
 @app.route("/post/<post_id>")
 def post_details(post_id):
-    '''Show post details'''
+    '''Show post details.'''
 
     post = Post.query.get_or_404(post_id)
 
@@ -140,8 +138,7 @@ def post_details(post_id):
 
 @app.route('/post/<post_id>/edit')
 def posts_edit(post_id):
-    """Show a form to edit an existing post"""
-
+    '''Generate edit post form.'''
     post = Post.query.get_or_404(post_id)
 
     return render_template('post_edit.html', post=post)
@@ -164,7 +161,7 @@ def posts_update(post_id):
 
 @app.route("/post/<post_id>/delete", methods=['POST'])
 def post_delete(post_id):
-
+    '''Delete post.'''
     post = Post.query.get_or_404(post_id)
 
     db.session.delete(post)
@@ -180,6 +177,7 @@ def tags_index():
     tags = Tag.query.all()
     return render_template('tags/index.html', tags=tags)
 
+
 @app.route('/tags/new')
 def new_tag():
     '''Render create tag form'''
@@ -192,35 +190,14 @@ def new_tag():
 def save_tag():
     '''Save tag to database.'''
 
-    for num in request.form.getlist("posts"):
-        print(num)
-
-    print(num)
-
+    # print(request.form.getlist("posts"))
+    # print(request.form['tags'])
     post_ids = [int(num) for num in request.form.getlist("posts")]
-    print(num)
-    print(post_ids)
+    # print(post_ids)
     post = [request.form.getlist("posts")]
-    print(post)
+    # print(post)
     posts = Post.query.filter(Post.id.in_(post_ids)).all()
-    new_tag = Tag(name=request.form['name'], posts=posts)
-
-    db.session.add(new_tag)
-    db.session.commit()
-
-    return redirect("/tags")
-
-@app.route('/tags/new', methods=["POST"])
-def save_tag():
-    '''Save tag to database.'''
-    print("******************************************")
-    print(request.form.getlist("posts"))
-    for num in request.form.getlist("posts"):
-        print(num)
-    print("******************************************")
-    post_ids = [int(num) for num in request.form.getlist("posts")]
-    posts = Post.query.filter(Post.id.in_(post_ids)).all()
-    new_tag = Tag(name=request.form['name'], posts=posts)
+    new_tag = Tag(name=request.form['tags'])
 
     db.session.add(new_tag)
     db.session.commit()
@@ -235,11 +212,33 @@ def tags_show(tag_id):
     return render_template('tag/show.html', tag=tag)
 
 
-@app.route('/tags/<int:tag_id>/edit')
+@app.route('/tags/<tag_id>/edit')
 def tags_edit_form(tag_id):
-    '''Edit tag'''
+    '''Edit tag.'''
     tag = Tag.query.get_or_404(tag_id)
     posts = Post.query.all()
     return render_template('tags/edit.html', tag=tag, posts=posts)
 
 
+@app.route('/tags/<tag_id>/edit', methods=["POST"])
+def tags_edit(tag_id):
+    '''Update tag.'''
+    tag = Tag.query.get_or_404(tag_id)
+    tag.name = request.form['name']
+    post_ids = [int(num) for num in request.form.getlist("posts")]
+    tag.posts = Post.query.filter(Post.id.in_(post_ids)).all()
+
+    db.session.add(tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
+
+@app.route('/tags/<tag_id>/delete', methods=["POST"])
+def tags_destroy(tag_id):
+    '''Delete tag.'''
+    tag = Tag.query.get_or_404(tag_id)
+    db.session.delete(tag)
+    db.session.commit()
+
+    return redirect("/tags")

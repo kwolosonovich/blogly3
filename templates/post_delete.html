@@ -13,8 +13,8 @@
                     Are you sure you want to delete your post?
                 </div>
                 <div class="submit-buttons">
-                    <a href="/users/{{ post.id }}/edit" class="btn btn-outline-info">Cancel</a>
-                    <button class="btn btn-info" type="submit" value="delete" name="submit">Delete</button>
+                    <a href="/users/{{ post.id }}/edit" class="btn btn-outline-secondary">Cancel</a>
+                    <a href="/post/{{ post.id }}/delete" class="btn btn-outline-danger" type="submit" value="delete" name="submit">Delete</a>
                 </div>
             </form>
         </div>

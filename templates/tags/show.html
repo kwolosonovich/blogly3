@@ -10,18 +10,18 @@
             <form method="POST">
                 <div class="form-group">
                     <h5>Name: {{ tag.name }}</h5>
-                  < type="text" class="form-control" name="create_tag" id="create_tag">
+                    {#                  < type="text" class="form-control" name="create_tag" id="create_tag">#}
                 </div>
                 <div>
-                    ul>
-  {% for post in tag.posts %}
-  <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
-  {% endfor %}
-</ul>
+                    <ul>
+                        {% for post in tag.posts %}
+                            <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="submit-buttons">
-                    <a href="/tag/{{ tag.id }}/edit" class="btn btn-outline-info">Edit</a>
-                    <a href="/tag/{{ tag.id }}/delete" class="btn btn-info">Delete</a>
+                    <a href="/tag/{{ tag.id }}/edit" class="btn btn-outline-warning">Edit</a>
+                    <a href="/tag/{{ tag.id }}/delete" class="btn btn-outline-danger">Delete</a>
                 </div>
             </form>
         </div>

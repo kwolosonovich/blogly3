@@ -13,11 +13,11 @@
             <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
 
     <form>
-      <button class="btn btn-primary btn-sm"
+      <button class="btn btn-outline-warning"
               formaction="/users/{{ user.id }}/edit"
               formmethod="GET">Edit
       </button>
-        <a href="/users/{{ user.id }}/delete" class="btn btn-info">Delete</a>
+        <a href="/users/{{ user.id }}/delete" class="btn btn-outline-danger">Delete</a>
     </form>
 
     <h2 class="mt-4">Posts</h2>
@@ -31,7 +31,7 @@
       {% endfor %}
     </ul>
 
-    <p><a href="/users/{{ user.id }}/post/new" class="btn btn-primary">Add Post</a></p>
+    <p><a href="/users/{{ user.id }}/post/new" class="btn btn-info">Add Post</a></p>
 
   </div>
 </div>

@@ -10,13 +10,13 @@
             <p>{{ post.content }}</p>
             <p>Posted: {{ post.friendly_date }}</p>
             <form>
-              <button class="btn btn-outline-primary"
+              <button class="btn btn-outline-secondary"
                       formmethod="GET"
                       formaction="/users/{{ post.user_id }}">Cancel</button>
-              <button class="btn btn-primary"
+              <button class="btn btn-outline-warning"
                       formmethod="GET"
                       formaction="/post/{{ post.id }}/edit">Edit</button>
-              <button class="btn btn-danger"
+              <button class="btn btn-outline-danger"
                       formmethod="POST"
                       formaction="/post/{{ post.id }}/delete">Delete</button>
             </form>
