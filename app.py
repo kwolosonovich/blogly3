@@ -15,6 +15,7 @@ connect_db(app)
 db.drop_all()
 db.create_all()
 
+
 @app.route("/")
 def home_page():
     '''Genereate homepage.'''
@@ -62,7 +63,8 @@ def create_user():
 def edit_user(user_id):
     '''Generate edit user form.'''
     user = User.query.get_or_404(user_id)
-    return render_template('/edit_user.html', user=user)
+    print('edit_user')
+    return render_template('edit_user.html', user=user)
 
 
 @app.route("/users/<user_id>/edit", methods=["POST"])
@@ -124,7 +126,7 @@ def post(user_id):
     db.session.add(new_post)
     db.session.commit()
 
-    return redirect(f"/users/{user_id}")
+    return redirect('/users')
 
 
 @app.route("/post/<post_id>")
@@ -139,6 +141,10 @@ def post_details(post_id):
 @app.route('/post/<post_id>/edit')
 def posts_edit(post_id):
     '''Generate edit post form.'''
+
+    # *******************
+    print('at post_edit')
+    # *******************
     post = Post.query.get_or_404(post_id)
 
     return render_template('post_edit.html', post=post)
@@ -205,11 +211,11 @@ def save_tag():
     return redirect("/tags")
 
 
-@app.route('/tag/<tag_id>')
+@app.route('/tags/<tag_id>')
 def tags_show(tag_id):
     '''Show tag details.'''
     tag = Tag.query.get_or_404(tag_id)
-    return render_template('tag/show.html', tag=tag)
+    return render_template('tags/show.html', tag=tag)
 
 
 @app.route('/tags/<tag_id>/edit')
@@ -223,18 +229,23 @@ def tags_edit_form(tag_id):
 @app.route('/tags/<tag_id>/edit', methods=["POST"])
 def tags_edit(tag_id):
     '''Update tag.'''
-    tag = Tag.query.get_or_404(tag_id)
-    tag.name = request.form['name']
-    post_ids = [int(num) for num in request.form.getlist("posts")]
-    tag.posts = Post.query.filter(Post.id.in_(post_ids)).all()
 
-    db.session.add(tag)
-    db.session.commit()
+    try:
+        tag = Tag.query.get_or_404(tag_id)
+        new_name = request.form['tags']
+        tag.name = new_name
 
-    return redirect("/tags")
+        db.session.add(tag)
+        db.session.commit()
+        return redirect("/tags")
+
+    except IntegrityError:
+        print('error')
+        return redirect("/tags")
 
 
-@app.route('/tags/<tag_id>/delete', methods=["POST"])
+
+@app.route('/tags/<tag_id>/delete', methods=["GET", "POST"])
 def tags_destroy(tag_id):
     '''Delete tag.'''
     tag = Tag.query.get_or_404(tag_id)

@@ -8,13 +8,14 @@
     <div class="card border-warning mb-3 align-content-center" style="width: 32rem;">
         <div class="card-body">
             <h5 class="card-title">{{ post_title }}</h5>
-            <form action="/post/{{post_id }}/delete", method="POST">
+            <form action="/post/{{ post_id }}/delete" , method="POST">
                 <div class="alert alert-danger" role="alert">
                     Are you sure you want to delete your post?
                 </div>
                 <div class="submit-buttons">
                     <a href="/users/{{ post.id }}/edit" class="btn btn-outline-secondary">Cancel</a>
-                    <a href="/post/{{ post.id }}/delete" class="btn btn-outline-danger" type="submit" value="delete" name="submit">Delete</a>
+                    <a href="/post/{{ post.id }}/delete" class="btn btn-outline-danger" type="submit" value="delete"
+                       name="submit">Delete</a>
                 </div>
             </form>
         </div>

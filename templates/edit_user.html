@@ -10,7 +10,7 @@
         <div class="card-body">
             <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>
 
-            <form action="/users/{{ user.id }}/edit", method="POST">
+            <form action="/users/{{ user.id }}/edit" method="POST">
                 <div class="form-group">
                     <label for="first_name">New First Name:</label>
                     <input type="text" class="form-control" name="first_name" id="first_name"
@@ -23,8 +23,10 @@
                 </div>
                 <div class="form-group">
                     <label for="add-photo">New Profile Picture:</label>
-                    <input type="text" name="image_url" id="add-photo" placeholder="Image URL" value="{{ user.image_url }}">
-                    <small id="photo_help" class="form-text text-muted">Don't want to add a profile picture now? Upload your picture later using Edit User.</small>
+                    <input type="text" name="image_url" id="add-photo" placeholder="Image URL"
+                           value="{{ user.image_url }}">
+                    <small id="photo_help" class="form-text text-muted">Don't want to add a profile picture now? Upload
+                        your picture later using Edit User.</small>
                 </div>
                 <div class="submit-buttons">
                     <a href="/users/{{ user.id }}" class="btn btn-outline-info" value="cancel" name="submit">Cancel</a>

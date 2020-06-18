@@ -7,7 +7,7 @@
 
     <div class="card border-success mb-3" style="width: 35rem;">
         <div class="card-body">
-            <form action="/all_tags", method="POST">
+            <form action="/all_tags" method="POST">
                 <ul>
                     {% for tag in tags %}
                         <li><a href="/tags/{{ tag.id }}">{{ tag.name }}</a></li>

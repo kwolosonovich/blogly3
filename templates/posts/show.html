@@ -12,10 +12,12 @@
             <form>
               <button class="btn btn-outline-secondary"
                       formmethod="GET"
-                      formaction="/users/{{ post.user_id }}">Cancel</button>
+                      formaction="/users">Cancel</button>
+
               <button class="btn btn-outline-warning"
                       formmethod="GET"
                       formaction="/post/{{ post.id }}/edit">Edit</button>
+
               <button class="btn btn-outline-danger"
                       formmethod="POST"
                       formaction="/post/{{ post.id }}/delete">Delete</button>

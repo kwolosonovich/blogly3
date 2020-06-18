@@ -7,10 +7,10 @@
 
     <div class="card border-success mb-3" style="width: 35rem;">
         <div class="card-body">
-            <form method="POST" action="/tags/{{ tag.id }}/edit">
+            <form method="POST" href="/tag/{{ tag_id }}/edit">
                 <div class="form-group">
-                    <label for="new_tag">New Tag:</label>
-                    <input type="text" class="form-control" placeholder="{{ tag.name }}" value="{{ tag.name }}" id="new_tag">
+                    <label for="name">New Tag:</label>
+                    <input type="text" class="form-control" name="tags" placeholder="{{ tag.name }}" value="{{ tag.name }}" id="name">
                 </div>
                 <div class="form-check form-group row">
                     {% for post in posts %}

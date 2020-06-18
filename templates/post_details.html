@@ -8,9 +8,7 @@
     <div class="card border-success mb-3" style="width: 35rem;">
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
-{#            <form action="/post/options", method="POST">#}
-           <form action="/post/{{ post.id }}/options", method="POST">
-
+            <form action="/post/{{ post.id }}/options" , method="POST">
                 <div class="form-group">
                     {{ post.content }}
                     {{ post.friendly_date }}
@@ -18,8 +16,12 @@
                 <div class="submit-buttons">
                     <a href="/users" class="btn btn-outline-secondary" value="back" name="submit">Back</a>
                     <form>
-                        <button formmethod="GET" formaction="/posts/{{ post.id }}/edit" class="btn btn-outline-warning" type="submit" value="edit" name="submit">Edit</button>
-                        <button formmethod="POST" formaction="/posts/{{ post.id }}/delete" class="btn btn-info" type="submit" value="delete" name="submit">Delete</button>
+                        <button formmethod="GET" formaction="/posts/{{ post.id }}/edit" class="btn btn-outline-warning"
+                                type="submit" value="edit" name="submit">Edit
+                        </button>
+                        <button formmethod="POST" formaction="/posts/{{ post.id }}/delete" class="btn btn-outline-danger"
+                                type="submit" value="delete" name="submit">Delete
+                        </button>
                     </form>
                 </div>
             </form>

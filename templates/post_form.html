@@ -9,19 +9,19 @@
         <div class="card-body">
             <form method="POST">
                 <div class="form-group">
-                  <label for="title">Title:</label>
-                  <input type="text" class="form-control" name="title" id="title">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" name="title" id="title">
                 </div>
                 <div class="form-group">
                     <label for="content">Content:</label>
                     <input type="text" class="form-control" name="content" id="content">
                 </div>
                 <div class="submit-buttons">
-                    <a href="/users/{{ user.id }}" class="btn btn-outline-secondary" value="cancel" name="submit">Cancel</a>
+                    <a href="/users/{{ user.id }}" class="btn btn-outline-secondary" value="cancel"
+                       name="submit">Cancel</a>
                     <button class="btn btn-info" type="submit">Create!</button>
                 </div>
             </form>
-
         </div>
     </div>
 
