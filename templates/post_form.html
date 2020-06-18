@@ -1,11 +1,11 @@
 {% extends 'index.html' %}
-{% block title %}Post{% endblock %}
+{% block title %}
+    <h1>Create a Post for {{ user.first_name }}</h1>
+{% endblock %}
 
 {% block content %}
 
-    <h1>Create a Post for {{ user.first_name }}</h1>
-
-    <div class="card border-success mb-3" style="width: 60rem">
+    <div class="card border-secondary mb-3" style="width: 60rem">
         <div class="card-body">
             <form method="POST">
                 <div class="form-group">

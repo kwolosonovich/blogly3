@@ -27,3 +27,17 @@ img {
     height: 300px;
     width: auto;
 }
+
+li {
+    list-style-type: none;
+    font-weight: bold;
+    text-align: left;
+}
+
+/*#header {*/
+/*    height: 20px;*/
+/*}*/
+
+a {
+    color: white;
+}

@@ -1,11 +1,11 @@
 {% extends 'index.html' %}
-{% block title %}Post Detail{% endblock %}
+{% block title %}
+    <h1>{{ user.first_name }}'s Post</h1>
+{% endblock %}
 
 {% block content %}
 
-    <h1>{{ user.first_name }}'s Post</h1>
-
-    <div class="card border-success mb-3" style="width: 35rem;">
+    <div class="card border-secondary mb-3" style="width: 35rem;">
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
             <form action="/post/{{ post.id }}/options" , method="POST">

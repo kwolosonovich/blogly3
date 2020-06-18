@@ -1,11 +1,11 @@
 {% extends 'index.html' %}
-{% block title %}Delete{% endblock %}
+{% block title %}
+    <h1>Delete Post</h1>
+{% endblock %}
 
 {% block content %}
 
-    <h1>Delete Post</h1>
-
-    <div class="card border-warning mb-3 align-content-center" style="width: 32rem;">
+    <div class="card border-secondary mb-3 align-content-center" style="width: 32rem;">
         <div class="card-body">
             <h5 class="card-title">{{ post_title }}</h5>
             <form action="/post/{{ post_id }}/delete" , method="POST">

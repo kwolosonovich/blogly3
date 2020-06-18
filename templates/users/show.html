@@ -1,11 +1,11 @@
 {% extends 'index.html' %}
-{% block title %}Post{% endblock %}
+{% block title %}
+    <h1>{{ user.first_name }}'s Profile</h1>
+{% endblock %}
 
 {% block content %}
 
-    <h1>{{ user.first_name }}'s Profile</h1>
-
-    <div class="card border-success mb-3" style="width: 28rem;">
+    <div class="card border-secondary mb-3" style="width: 28rem;">
     <div id="img" class="card-img-top" alt="profile picture">
         <img src="{{ user.image_url }}" alt="picture" class="img-thumbnail">
     </div>

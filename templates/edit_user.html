@@ -1,11 +1,12 @@
 {% extends 'index.html' %}
-{% block title %}Edit{% endblock %}
+{% block title %}
+    <h1>Edit {{ user.first_name }}'s Profile</h1>
+{% endblock %}
 
 {% block content %}
+    <link rel="stylesheet" href="../static/styles.css">
 
-    <h1>Edit {{ user.first_name }}'s Profile</h1>
-
-    <div class="card border-primary mb-3" style="width: 28rem;">
+    <div class="card border-secondary mb-3" style="width: 28rem;">
         <img id="img" class="card-img-top img-thumbnail" src="{{ user.image_url }}" alt="profile picture">
         <div class="card-body">
             <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>

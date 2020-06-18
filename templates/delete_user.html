@@ -1,11 +1,12 @@
 {% extends 'index.html' %}
-{% block title %}Delete{% endblock %}
+{% block title %}
+    <h1>Delete {{ user.first_name }}'s Profile</h1>
+{% endblock %}
 
 {% block content %}
 
-    <h1>Delete {{ user.first_name }}'s Profile</h1>
 
-    <div class="card border-warning mb-3 align-content-center" style="width: 28rem;">
+    <div class="card border-secondary mb-3 align-content-center" style="width: 28rem;">
         <img id="img" class="card-img-top img-thumbnail" src="{{ user.image_url }}" alt="profile picture">
         <div class="card-body">
             <h5 class="card-title">{{ user.first_name }} {{ user.last_name }}</h5>

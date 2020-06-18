@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
 from models import db, connect_db, User, Post, Tag, PostTag
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 
@@ -38,7 +39,7 @@ def users_show(user_id):
     return render_template('users/show.html', user=user)
 
 
-@app.route("/create", methods=["GET"])
+@app.route("/create")
 def create():
     '''Create new user form.'''
     return render_template('/create_user.html')
@@ -47,7 +48,6 @@ def create():
 @app.route("/create_user", methods=["GET", "POST"])
 def create_user():
     '''Create a new user.'''
-
     first_name = request.form["first_name"]
     last_name = request.form["last_name"]
     image_url = request.form["image_url"] or None
@@ -205,8 +205,12 @@ def save_tag():
     posts = Post.query.filter(Post.id.in_(post_ids)).all()
     new_tag = Tag(name=request.form['tags'])
 
-    db.session.add(new_tag)
-    db.session.commit()
+    try:
+        db.session.add(new_tag)
+        db.session.commit()
+    except IntegrityError as e:
+        flash('Duplicate tag name. Please enter a unique name')
+        return redirect("/tags")
 
     return redirect("/tags")
 
@@ -239,8 +243,8 @@ def tags_edit(tag_id):
         db.session.commit()
         return redirect("/tags")
 
-    except IntegrityError:
-        print('error')
+    except IntegrityError as e:
+        flash('Duplicate tag name. Please enter a unique name')
         return redirect("/tags")
 
 

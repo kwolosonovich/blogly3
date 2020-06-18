@@ -5,17 +5,26 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
           integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styles.css">
+
     <title>Blogly</title>
 </head>
 <body>
-<nav class="navbar navbar-dark bg-dark">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="/">Home</a>
+
+<nav class="navbar navbar-dark bg-info w-75 mx-auto mt-3 rounded">
+    <div class="nav nav-pills flex-column flex-sm-row">
+        <a class="nav-item nav-link" href="/">Home</a>
         <a class="nav-item nav-link" href="/users">Users</a>
         <a class="nav-item nav-link" href="/create">Create a User</a>
         <a class="nav-item nav-link" href="/tags">Tags</a>
     </div>
 </nav>
+<div>
+    <div class="jumbotron w-75 p-1 mx-auto mt-3" id="header">
+      <h1 class="display-4">{% block title %}{% endblock %}</h1>
+    </div>
+</div>
+
+
 <main id="content">
     {% block content %}
     {% endblock %}

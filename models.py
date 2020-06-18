@@ -1,5 +1,6 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import IntegrityError
 
 
 db = SQLAlchemy()
@@ -86,3 +87,9 @@ class Tag(db.Model):
         backref="tags",
     )
 
+
+# def handle_integrity_error:
+#     try:
+#
+#     except IntegrityError as e:
+#         print(e)
