@@ -1,0 +1,31 @@
+{% extends 'index.html' %}
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+
+    <h1>Tag Details</h1>
+
+    <div class="card border-success mb-3" style="width: 35rem;">
+        <div class="card-body">
+            <form method="POST">
+                <div class="form-group">
+                    <h5>Name: {{ tag.name }}</h5>
+                  < type="text" class="form-control" name="create_tag" id="create_tag">
+                </div>
+                <div>
+                    ul>
+  {% for post in tag.posts %}
+  <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
+  {% endfor %}
+</ul>
+                </div>
+                <div class="submit-buttons">
+                    <a href="/tag/{{ tag.id }}/edit" class="btn btn-outline-info">Edit</a>
+                    <a href="/tag/{{ tag.id }}/delete" class="btn btn-info">Delete</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}

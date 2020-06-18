@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from models import db, connect_db, User, Post
+from models import db, connect_db, User, Post, Tag, PostTag
 
 app = Flask(__name__)
 
@@ -12,9 +12,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 connect_db(app)
-
 db.drop_all()
-
 db.create_all()
 
 @app.route("/")
@@ -181,3 +179,38 @@ def tags_index():
 
     tags = Tag.query.all()
     return render_template('tags/index.html', tags=tags)
+
+@app.route('/tags/new')
+def new_tag():
+    '''Render create tag form'''
+
+    posts = Post.query.all()
+    return render_template('tags/new.html', posts=posts)
+
+
+@app.route('/tags/new', methods=["POST"])
+def save_tag():
+    '''Save tag to database.'''
+    post_ids = [int(num) for num in request.form.getlist("posts")]
+    posts = Post.query.filter(Post.id.in_(post_ids)).all()
+    new_tag = Tag(name=request.form['name'], posts=posts)
+
+    db.session.add(new_tag)
+    db.session.commit()
+
+    return redirect("/tags")
+
+
+@app.route('/tag/<tag_id>')
+def tags_show(tag_id):
+    '''Show tag details.'''
+    tag = Tag.query.get_or_404(tag_id)
+    return render_template('tag/show.html', tag=tag)
+
+
+@app.route('/tags/<int:tag_id>/edit')
+def tags_edit_form(tag_id):
+    '''Edit tag'''
+    tag = Tag.query.get_or_404(tag_id)
+    posts = Post.query.all()
+    return render_template('tags/edit.html', tag=tag, posts=posts)
